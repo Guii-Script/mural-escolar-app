@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -25,6 +25,23 @@
             <img src="carinhas.webp" alt="Personagens Cartoon" class="header-characters">
         </div>
     </header>
+
+    <div class="filters-container">
+        <div class="search-container">
+            <input type="search" id="search-bar" placeholder="O que você procura? Ex: bolo, aulas, manicure...">
+        </div>
+        <div class="category-filter-container">
+            <label for="category-filter">Filtrar por Categoria:</label>
+            <select id="category-filter">
+                <option value="all">Todas as Categorias</option>
+                <option value="aulas">Aulas e Cursos</option>
+                <option value="comida">Comidas e Doces</option>
+                <option value="beleza">Beleza e Saúde</option>
+                <option value="servicos">Serviços Gerais</option>
+                <option value="vendas">Venda de Produtos</option>
+            </select>
+        </div>
+    </div>
 
     <main id="ads-container">
         </main>
@@ -58,7 +75,7 @@
         <div class="modal-content">
             <span class="close-btn details-close-btn">&times;</span>
             <div id="ad-details-content">
-            </div>
+                </div>
         </div>
     </div>
 
