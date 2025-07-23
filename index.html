@@ -9,30 +9,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <img src="Senac_logo.png" alt="Logo Senac" class="header-logo">
-        
-        <div class="header-main-content">
-            <div class="header-text">
+    <header class="cabecalho">
+        <img src="Senac_logo.png" alt="Logo Senac" class="cabecalho-logo">
+        <div class="cabecalho-conteudo-principal">
+            <div class="cabecalho-texto">
                 <h1>Mural de Empreendedorismo</h1>
                 <p>Seu espaço para vender, oferecer e encontrar!</p>
             </div>
-            <img src="carinhas.webp" alt="Personagens Cartoon" class="header-characters">
+            <img src="carinhas.png" alt="Personagens Cartoon" class="cabecalho-personagens">
         </div>
     </header>
 
-    <div class="filters-container">
-        <div class="search-container">
-            <input type="search" id="search-bar" placeholder="O que você procura? Ex: bolo, aulas, manicure...">
+    <div class="container-filtros">
+        <div class="container-pesquisa">
+            <input type="search" id="barra-pesquisa" placeholder="O que você procura? Ex: bolo, aulas, manicure...">
         </div>
-        <div class="category-filter-container">
-            <label for="category-filter">Filtrar por Categoria:</label>
-            <select id="category-filter">
+        <div class="container-filtro-categoria">
+            <label for="filtro-categoria">Filtrar por Categoria:</label>
+            <select id="filtro-categoria">
                 <option value="all">Todas as Categorias</option>
                 <option value="aulas">Aulas e Cursos</option>
                 <option value="comida">Comidas e Doces</option>
@@ -43,21 +43,21 @@
         </div>
     </div>
 
-    <main id="ads-container">
+    <main id="container-anuncios">
         </main>
     
-    <button id="add-ad-btn" class="fab">
+    <button id="btn-adicionar-anuncio" class="btn-flutuante">
         <i class="material-icons">add</i>
     </button>
     
-    <div id="form-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn form-close-btn">&times;</span>
+    <div id="modal-formulario" class="modal">
+        <div class="modal-conteudo">
+            <span class="btn-fechar btn-fechar-formulario">&times;</span>
             <h2>Publicar um Novo Anúncio</h2>
-            <form id="ad-form">
-                <input type="text" id="ad-title" placeholder="Título do anúncio (Ex: Manicure)" required>
-                <textarea id="ad-description" placeholder="Descreva seu serviço ou produto..." required></textarea>
-                <select id="ad-category" required>
+            <form id="formulario-anuncio">
+                <input type="text" id="anuncio-titulo" placeholder="Título do anúncio (Ex: Manicure)" required>
+                <textarea id="anuncio-descricao" placeholder="Descreva seu serviço ou produto..." required></textarea>
+                <select id="anuncio-categoria" required>
                     <option value="" disabled selected>Selecione uma categoria</option>
                     <option value="aulas">Aulas e Cursos</option>
                     <option value="comida">Comidas e Doces</option>
@@ -65,16 +65,16 @@
                     <option value="servicos">Serviços Gerais</option>
                     <option value="vendas">Venda de Produtos</option>
                 </select>
-                <input type="text" id="ad-contact" placeholder="Contato (WhatsApp ou @Instagram)" required>
+                <input type="text" id="anuncio-contato" placeholder="Contato (WhatsApp ou @Instagram)" required>
                 <button type="submit">Publicar</button>
             </form>
         </div>
     </div>
 
-    <div id="details-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn details-close-btn">&times;</span>
-            <div id="ad-details-content">
+    <div id="modal-detalhes" class="modal">
+        <div class="modal-conteudo">
+            <span class="btn-fechar btn-fechar-detalhes">&times;</span>
+            <div id="conteudo-detalhes-anuncio">
                 </div>
         </div>
     </div>

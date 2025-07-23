@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: none;
 }
 
 body {
@@ -14,7 +15,7 @@ body {
 }
 
 /* ===== ESTILOS DO CABEÇALHO ===== */
-header {
+.cabecalho {
     background-color: #004A8D;
     color: #ffffff;
     padding: 20px;
@@ -27,40 +28,39 @@ header {
     border-bottom: 4px solid #F7941D;
 }
 
-.header-main-content {
+.cabecalho-conteudo-principal {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.header-text {
+.cabecalho-texto {
     text-align: center;
 }
 
-header h1 {
+.cabecalho h1 {
     font-size: 3em;
     line-height: 1.1;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
-header p {
+.cabecalho p {
     font-size: 1.5em;
     opacity: 0.9;
 }
 
-.header-logo {
+.cabecalho-logo {
     display: none;
 }
 
-.header-characters {
+.cabecalho-personagens {
     max-width: 180px;
     height: auto;
 }
 
 /* ===== FILTROS E PESQUISA ===== */
-/* ATUALIZADO: Container principal para os filtros */
-.filters-container {
+.container-filtros {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,13 +68,12 @@ header p {
     gap: 20px;
 }
 
-/* NOVO: Estilos para o container da barra de pesquisa */
-.search-container {
+.container-pesquisa {
     width: 100%;
     max-width: 600px;
 }
 
-#search-bar {
+#barra-pesquisa {
     width: 100%;
     padding: 12px 20px;
     font-size: 1.3em;
@@ -87,33 +86,32 @@ header p {
     transition: all 0.3s ease;
 }
 
-#search-bar:focus {
+#barra-pesquisa:focus {
     box-shadow: 0 0 10px rgba(0, 74, 141, 0.3);
     border-color: #F7941D;
 }
 
-/* Remove o 'x' padrão em alguns navegadores para um visual mais limpo */
-#search-bar::-webkit-search-cancel-button {
+#barra-pesquisa::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
 }
 
 
-.category-filter-container {
+.container-filtro-categoria {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
 }
 
-.category-filter-container label {
+.container-filtro-categoria label {
     font-size: 1.4em;
     color: #004A8D;
 }
 
-#category-filter {
+#filtro-categoria {
     font-family: "Caveat Brush", cursive;
-    padding: 10px 18px;
+    padding: 15px 25px;
     font-size: 1.2em;
     border-radius: 50px;
     border: 2px solid #004A8D;
@@ -124,11 +122,11 @@ header p {
     -webkit-appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23004A8D%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
-    background-position: right 15px top 50%;
+    background-position: right 3px top 50%;
     background-size: .65em auto;
     transition: all 0.3s ease;
 }
-#category-filter:hover{
+#filtro-categoria:hover{
     background-color: #eef5ff;
     box-shadow: 0 4px 10px rgba(0, 74, 141, 0.15);
 }
@@ -142,7 +140,7 @@ main {
 }
 
 /* ===== CARD DE ANÚNCIO ESTILIZADO ===== */
-.ad-card {
+.card-anuncio {
     background-color: #ffffff;
     border: 3px solid #2c3e50;
     border-radius: 10px 10px 8px 8px;
@@ -158,17 +156,17 @@ main {
     overflow: hidden;
 }
 
-.ad-card.visible {
+.card-anuncio.visivel {
     opacity: 1;
     transform: translateY(0);
 }
 
-.ad-card:hover {
+.card-anuncio:hover {
     transform: rotate(1deg) translateY(-5px);
     box-shadow: 8px 8px 0px #004A8D;
 }
 
-.ad-card .category {
+.card-anuncio .categoria {
     background-color: #F7941D;
     color: #ffffff;
     padding: 5px 15px;
@@ -180,14 +178,14 @@ main {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.ad-card .date {
+.card-anuncio .data-publicacao {
     font-size: 0.9em;
     color: #555;
     margin-bottom: 10px;
     text-align: right;
 }
 
-.ad-card h3 {
+.card-anuncio h3 {
     color: #004A8D;
     margin-bottom: 10px;
     font-size: 2em;
@@ -200,7 +198,7 @@ main {
     overflow: hidden;
 }
 
-.ad-card p {
+.card-anuncio p {
     flex-grow: 1;
     margin-bottom: 20px;
     font-size: 1.2em;
@@ -213,7 +211,7 @@ main {
     word-break: break-all;
 }
 
-.ad-card .contact {
+.card-anuncio .contato {
     font-weight: bold;
     color: #004A8D;
     text-align: center;
@@ -226,11 +224,11 @@ main {
     overflow-wrap: break-word;
     word-break: break-all;
 }
-.ad-card:hover .contact {
+.card-anuncio:hover .contato {
     background-color: #fff3e0;
 }
 
-.no-ads-message {
+.mensagem-sem-anuncios {
     text-align: center;
     font-size: 1.5em;
     color: #777;
@@ -239,7 +237,7 @@ main {
 }
 
 /* Botão Flutuante (FAB) */
-.fab {
+.btn-flutuante {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -259,7 +257,7 @@ main {
     z-index: 999;
 }
 
-.fab:hover {
+.btn-flutuante:hover {
     transform: scale(1.1) rotate(15deg);
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
@@ -281,7 +279,7 @@ main {
     padding: 15px;
 }
 
-.modal-content {
+.modal-conteudo {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 15px;
@@ -301,7 +299,7 @@ main {
     to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-.close-btn {
+.btn-fechar {
     position: absolute;
     top: 15px;
     right: 25px;
@@ -310,19 +308,19 @@ main {
     cursor: pointer;
     transition: transform 0.2s;
 }
-.close-btn:hover{
+.btn-fechar:hover{
     transform: rotate(90deg);
     color: #F7941D;
 }
 
 /* Estilos do Formulário */
-#ad-form {
+#formulario-anuncio {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-#ad-form input, #ad-form textarea, #ad-form select {
+#formulario-anuncio input, #formulario-anuncio textarea, #formulario-anuncio select {
     width: 100%;
     padding: 12px;
     border: 2px solid #ccc;
@@ -332,13 +330,13 @@ main {
     transition: all 0.2s ease;
 }
 
-#ad-form input:focus, #ad-form textarea:focus, #ad-form select:focus {
+#formulario-anuncio input:focus, #formulario-anuncio textarea:focus, #formulario-anuncio select:focus {
     border-color: #004A8D;
     box-shadow: 0 0 8px rgba(0, 74, 141, 0.2);
     outline: none;
 }
 
-#ad-form button {
+#formulario-anuncio button {
     background-color: #004A8D;
     color: #ffffff;
     padding: 15px;
@@ -351,26 +349,26 @@ main {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-#ad-form button:hover {
+#formulario-anuncio button:hover {
     background-color: #003b70;
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 /* Estilos para o conteúdo do Modal de Detalhes */
-#ad-details-content {
+#conteudo-detalhes-anuncio {
     overflow-y: auto;
     padding-right: 15px;
 }
 
-#ad-details-content h2 {
+#conteudo-detalhes-anuncio h2 {
     color: #004A8D;
     margin-bottom: 10px;
     font-size: 2.5em;
     overflow-wrap: break-word;
     word-break: break-all;
 }
-#ad-details-content .category {
+#conteudo-detalhes-anuncio .categoria {
     background-color: #F7941D;
     color: #ffffff;
     padding: 5px 15px;
@@ -379,14 +377,20 @@ main {
     display: inline-block;
     margin-bottom: 20px;
 }
-#ad-details-content p {
+#conteudo-detalhes-anuncio .data-publicacao {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#conteudo-detalhes-anuncio p {
     font-size: 1.3em;
     line-height: 1.7;
     margin-bottom: 25px;
     overflow-wrap: break-word;
     word-break: break-all;
 }
-#ad-details-content .contact {
+#conteudo-detalhes-anuncio .contato {
     font-weight: bold;
     font-size: 1.6em;
     color: #ffffff;
@@ -400,7 +404,7 @@ main {
     overflow-wrap: break-word;
     word-break: break-all;
 }
-#ad-details-content .contact:hover {
+#conteudo-detalhes-anuncio .contato:hover {
     transform: scale(1.03);
     box-shadow: 0 5px 15px rgba(247, 148, 29, 0.4);
 }
@@ -418,37 +422,37 @@ main {
         grid-template-columns: repeat(3, 1fr);
         padding: 25px 40px;
     }
-     .header-logo {
+     .cabecalho-logo {
         display: block;
         position: absolute;
         left: 40px;
         top: 50%;
         transform: translateY(-50%);
-        height: 150px;
+        height: 100px;
     }
-    .header-main-content {
+    .cabecalho-conteudo-principal {
         flex-direction: row;
         gap: 30px;
     }
-    .header-text {
+    .cabecalho-texto {
         text-align: left;
     }
-    header h1 {
+    .cabecalho h1 {
         font-size: 3.8em;
     }
-    header p {
+    .cabecalho p {
         font-size: 1.6em;
     }
-    .header-characters {
-        max-width: 200px;
+    .cabecalho-personagens {
+        max-width: 300px;
         margin-top: 0;
     }
-    .filters-container {
+    .container-filtros {
         flex-direction: row;
         justify-content: center;
         gap: 30px;
     }
-    .search-container {
+    .container-pesquisa {
         flex-grow: 1;
     }
 }

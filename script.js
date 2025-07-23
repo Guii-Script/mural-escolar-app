@@ -1,175 +1,160 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const adsContainer = document.getElementById('ads-container');
-    const addAdBtn = document.getElementById('add-ad-btn');
-    const formModal = document.getElementById('form-modal');
-    const detailsModal = document.getElementById('details-modal');
-    const closeFormBtn = document.querySelector('.form-close-btn');
-    const closeDetailsBtn = document.querySelector('.details-close-btn');
-    const adForm = document.getElementById('ad-form');
-    const adDetailsContent = document.getElementById('ad-details-content');
-    
-    // NOVO: Referência para a barra de pesquisa e o filtro de categoria
-    const searchBar = document.getElementById('search-bar');
-    const categoryFilter = document.getElementById('category-filter');
+    // --- Seleção de Elementos ---
+    const containerAnuncios = document.getElementById('container-anuncios');
+    const btnAdicionarAnuncio = document.getElementById('btn-adicionar-anuncio');
+    const modalFormulario = document.getElementById('modal-formulario');
+    const modalDetalhes = document.getElementById('modal-detalhes');
+    const btnFecharFormulario = document.querySelector('.btn-fechar-formulario');
+    const btnFecharDetalhes = document.querySelector('.btn-fechar-detalhes');
+    const formularioAnuncio = document.getElementById('formulario-anuncio');
+    const conteudoDetalhesAnuncio = document.getElementById('conteudo-detalhes-anuncio');
+    const barraPesquisa = document.getElementById('barra-pesquisa');
+    const filtroCategoria = document.getElementById('filtro-categoria');
 
-    let adsData = [
+    // --- Dados da Aplicação ---
+    let dadosAnuncios = [
         { title: 'Aulas de Violão', description: 'Aulas particulares de violão para iniciantes. Aprenda os primeiros acordes e ritmos de forma prática e divertida. Material incluso.', category: 'aulas', contact: '@violao_facil', date: '2025-07-20T10:00:00.000Z' },
         { title: 'Brownies Deliciosos', description: 'Os melhores brownies da cidade! Feitos com chocolate nobre e ingredientes de alta qualidade. Faça sua encomenda para festas e eventos ou para aquele café da tarde especial.', category: 'comida', contact: '(19) 99999-8888', date: '2025-07-19T15:30:00.000Z' },
         { title: 'Manicure e Pedicure', description: 'Serviços de manicure e pedicure com hora marcada. Esmaltes de alta qualidade e materiais esterilizados. Deixe suas unhas lindas!', category: 'beleza', contact: '(11) 98765-4321', date: '2025-07-18T18:00:00.000Z' }
     ];
+    const mapaCategorias = { 'aulas': 'Aulas e Cursos', 'comida': 'Comidas e Doces', 'beleza': 'Beleza e Saúde', 'servicos': 'Serviços Gerais', 'vendas': 'Venda de Produtos' };
 
-    const categoryMap = { 'aulas': 'Aulas e Cursos', 'comida': 'Comidas e Doces', 'beleza': 'Beleza e Saúde', 'servicos': 'Serviços Gerais', 'vendas': 'Venda de Produtos' };
-
-    const observer = new IntersectionObserver((entries) => {
+    // --- Lógica de Animação de Scroll ---
+    const observadorScroll = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
+                entry.target.classList.add('visivel');
+                observadorScroll.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
 
-    function formatAdDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
+    // --- Funções ---
+    function formatarDataAnuncio(stringData) {
+        const data = new Date(stringData);
+        return data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     }
 
-    // ATUALIZADO: Esta função agora recebe o array já filtrado
-    function renderAds(filteredAds) {
-        adsContainer.innerHTML = '';
-
-        if (filteredAds.length === 0) {
-            adsContainer.innerHTML = `<p class="no-ads-message">Ops! Nenhum anúncio encontrado...</p>`;
-            return;
-        }
-
-        filteredAds.forEach((ad, idx) => {
-            const originalIndex = adsData.findIndex(originalAd => originalAd === ad);
-            const card = createAdCard(ad, originalIndex);
-            const delay = idx * 100;
-            card.style.transitionDelay = `${delay}ms`;
-
-            adsContainer.appendChild(card);
-            observer.observe(card);
-        });
-    }
-    
-    // NOVO: Função central que aplica todos os filtros e chama a renderização
-    function applyFiltersAndRender() {
-        const searchTerm = searchBar.value.toLowerCase();
-        const selectedCategory = categoryFilter.value;
-
-        let filteredAds = adsData;
-
-        // 1. Filtra por categoria
-        if (selectedCategory !== 'all') {
-            filteredAds = filteredAds.filter(ad => ad.category === selectedCategory);
-        }
-
-        // 2. Filtra pelo termo de pesquisa (no resultado do filtro anterior)
-        if (searchTerm) {
-            filteredAds = filteredAds.filter(ad => 
-                ad.title.toLowerCase().includes(searchTerm) || 
-                ad.description.toLowerCase().includes(searchTerm)
-            );
-        }
-
-        renderAds(filteredAds);
-    }
-
-    function createAdCard(ad, index) {
+    function criarCardAnuncio(anuncio, index) {
         const card = document.createElement('div');
-        card.className = 'ad-card';
+        card.className = 'card-anuncio';
         card.dataset.index = index;
-        card.innerHTML = `<span class="category">${categoryMap[ad.category]}</span>
-                          <p class="date">Publicado em: ${formatAdDate(ad.date)}</p>
-                          <h3>${ad.title}</h3>
-                          <p>${ad.description}</p>
-                          <div class="contact">Ver Contato</div>`;
+        card.innerHTML = `<span class="categoria">${mapaCategorias[anuncio.category]}</span>
+                          <p class="data-publicacao">Publicado em: ${formatarDataAnuncio(anuncio.date)}</p>
+                          <h3>${anuncio.title}</h3>
+                          <p>${anuncio.description}</p>
+                          <div class="contato">Ver Contato</div>`;
         return card;
     }
 
-    function openDetailsModal(index) {
-        const ad = adsData[index];
-        adDetailsContent.innerHTML = `<span class="category">${categoryMap[ad.category]}</span>
-                                      <h2>${ad.title}</h2>
-                                      <p class="date">Publicado em: ${formatAdDate(ad.date)}</p>
-                                      <p>${ad.description}</p>
-                                      <a class="contact" href="#">${ad.contact}</a>`;
-        detailsModal.style.display = 'flex';
+    function renderizarAnuncios(anunciosFiltrados) {
+        containerAnuncios.innerHTML = '';
+        if (anunciosFiltrados.length === 0) {
+            containerAnuncios.innerHTML = `<p class="mensagem-sem-anuncios">Ops! Nenhum anúncio encontrado...</p>`;
+            return;
+        }
+        anunciosFiltrados.forEach((anuncio, idx) => {
+            const indexOriginal = dadosAnuncios.findIndex(adOriginal => adOriginal === anuncio);
+            const card = criarCardAnuncio(anuncio, indexOriginal);
+            card.style.transitionDelay = `${idx * 100}ms`;
+            containerAnuncios.appendChild(card);
+            observadorScroll.observe(card);
+        });
+    }
+    
+    function aplicarFiltrosERenderizar() {
+        const termoPesquisa = barraPesquisa.value.toLowerCase();
+        const categoriaSelecionada = filtroCategoria.value;
+        let anunciosFiltrados = dadosAnuncios;
+
+        if (categoriaSelecionada !== 'all') {
+            anunciosFiltrados = anunciosFiltrados.filter(anuncio => anuncio.category === categoriaSelecionada);
+        }
+
+        if (termoPesquisa) {
+            anunciosFiltrados = anunciosFiltrados.filter(anuncio => 
+                anuncio.title.toLowerCase().includes(termoPesquisa) || 
+                anuncio.description.toLowerCase().includes(termoPesquisa)
+            );
+        }
+        renderizarAnuncios(anunciosFiltrados);
     }
 
-    addAdBtn.addEventListener('click', () => { formModal.style.display = 'flex'; });
-
-    function closeModal() {
-        formModal.style.display = 'none';
-        detailsModal.style.display = 'none';
+    function abrirModalDetalhes(index) {
+        const anuncio = dadosAnuncios[index];
+        conteudoDetalhesAnuncio.innerHTML = `<span class="categoria">${mapaCategorias[anuncio.category]}</span>
+                                      <h2>${anuncio.title}</h2>
+                                      <p class="data-publicacao">Publicado em: ${formatarDataAnuncio(anuncio.date)}</p>
+                                      <p>${anuncio.description}</p>
+                                      <a class="contato" href="#">${anuncio.contact}</a>`;
+        modalDetalhes.style.display = 'flex';
     }
 
-    closeFormBtn.addEventListener('click', closeModal);
-    closeDetailsBtn.addEventListener('click', closeModal);
+    function fecharModais() {
+        modalFormulario.style.display = 'none';
+        modalDetalhes.style.display = 'none';
+    }
 
-    adsContainer.addEventListener('click', (event) => {
-        const card = event.target.closest('.ad-card');
+    function efeitoMaquinaDeEscrever(texto, i, callback) {
+        if (i < (texto.length)) {
+            document.title = texto.substring(0, i + 1) + ' |';
+            setTimeout(() => {
+                efeitoMaquinaDeEscrever(texto, i + 1, callback)
+            }, 150);
+        } else if (typeof callback == 'function') {
+            document.title = texto;
+            setTimeout(callback, 1000);
+        }
+    }
+
+    function iniciarAnimacaoTitulo() {
+        const textoTitulo = "Mural de Empreendedorismo";
+        efeitoMaquinaDeEscrever(textoTitulo, 0, null);
+    }
+
+    // --- Eventos ---
+    // A LINHA ABAIXO FOI A CORRIGIDA
+    btnAdicionarAnuncio.addEventListener('click', () => { modalFormulario.style.display = 'flex'; });
+    
+    btnFecharFormulario.addEventListener('click', fecharModais);
+    btnFecharDetalhes.addEventListener('click', fecharModais);
+
+    containerAnuncios.addEventListener('click', (event) => {
+        const card = event.target.closest('.card-anuncio');
         if (card) {
-            openDetailsModal(card.dataset.index);
+            abrirModalDetalhes(card.dataset.index);
         }
     });
 
-    adForm.addEventListener('submit', (event) => {
+    formularioAnuncio.addEventListener('submit', (event) => {
         event.preventDefault();
-        const newAd = {
-            title: document.getElementById('ad-title').value,
-            description: document.getElementById('ad-description').value,
-            category: document.getElementById('ad-category').value,
-            contact: document.getElementById('ad-contact').value,
+        const novoAnuncio = {
+            title: document.getElementById('anuncio-titulo').value,
+            description: document.getElementById('anuncio-descricao').value,
+            category: document.getElementById('anuncio-categoria').value,
+            contact: document.getElementById('anuncio-contato').value,
             date: new Date().toISOString()
         };
-        adsData.unshift(newAd);
+        dadosAnuncios.unshift(novoAnuncio);
         
-        // Limpa os filtros e re-renderiza
-        adForm.reset();
-        searchBar.value = '';
-        categoryFilter.value = 'all';
-        applyFiltersAndRender();
-        closeModal();
+        formularioAnuncio.reset();
+        barraPesquisa.value = '';
+        filtroCategoria.value = 'all';
+        aplicarFiltrosERenderizar();
+        fecharModais();
     });
 
-    // ATUALIZADO: Adiciona os event listeners para os filtros
-    searchBar.addEventListener('input', applyFiltersAndRender);
-    categoryFilter.addEventListener('change', applyFiltersAndRender);
+    barraPesquisa.addEventListener('input', aplicarFiltrosERenderizar);
+    filtroCategoria.addEventListener('change', aplicarFiltrosERenderizar);
 
     window.addEventListener('click', (event) => {
-        if (event.target === formModal || event.target === detailsModal) {
-            closeModal();
+        if (event.target === modalFormulario || event.target === modalDetalhes) {
+            fecharModais();
         }
     });
 
-    function typeWriter(text, i, fnCallback) {
-        if (i < (text.length)) {
-            document.title = text.substring(0, i + 1) + ' |';
-            setTimeout(() => {
-                typeWriter(text, i + 1, fnCallback)
-            }, 150);
-        } else if (typeof fnCallback == 'function') {
-            document.title = text;
-            setTimeout(fnCallback, 1000);
-        }
-    }
-
-    function startTypingAnimation() {
-        const titleText = "Mural de Empreendedorismo";
-        typeWriter(titleText, 0, null);
-    }
-
-    // Renderização inicial
-    applyFiltersAndRender();
-    startTypingAnimation();
+    // --- Execução Inicial ---
+    aplicarFiltrosERenderizar();
+    iniciarAnimacaoTitulo();
 });
