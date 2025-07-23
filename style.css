@@ -97,11 +97,16 @@ body {
 }
 
 
+/* ===== ESTILOS DO FILTRO DE CATEGORIA COM SETA ANIMADA ===== */
+
+/* O container que segura o label e o select */
 .container-filtro-categoria {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
+    /* Posição relativa para que a seta customizada seja posicionada dentro dele */
+    position: relative; 
 }
 
 .container-filtro-categoria label {
@@ -109,26 +114,48 @@ body {
     color: #004A8D;
 }
 
+/* O select customizado */
 #filtro-categoria {
     font-family: "Caveat Brush", cursive;
-    padding: 15px 25px;
+    padding: 10px 40px 10px 20px; /* Espaço à direita para a seta */
     font-size: 1.2em;
     border-radius: 50px;
     border: 2px solid #004A8D;
     background-color: #fff;
     color: #004A8D;
     cursor: pointer;
+    
+    /* Remove a seta padrão do navegador */
     appearance: none;
     -webkit-appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23004A8D%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 3px top 50%;
-    background-size: .65em auto;
-    transition: all 0.3s ease;
 }
-#filtro-categoria:hover{
-    background-color: #eef5ff;
-    box-shadow: 0 4px 10px rgba(0, 74, 141, 0.15);
+
+/* A seta customizada, criada com um pseudo-elemento */
+.container-filtro-categoria::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px; /* Posição da seta */
+    
+    /* Estado inicial: rotacionada */
+    transform: translateY(-50%) rotate(-90deg);
+    
+    width: 0.7em;
+    height: 0.7em;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23004A8D%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+    /* A transição que suaviza a animação */
+    transition: transform 0.3s ease;
+
+    pointer-events: none;
+}
+
+/* A animação em si, que ocorre ao passar o mouse */
+.container-filtro-categoria:hover::after {
+    /* Estado final: sem rotação */
+    transform: translateY(-50%) rotate(0deg);
 }
 
 /* ===== CONTAINER PRINCIPAL DOS ANÚNCIOS ===== */
