@@ -98,14 +98,11 @@ body {
 
 
 /* ===== ESTILOS DO FILTRO DE CATEGORIA COM SETA ANIMADA ===== */
-
-/* O container que segura o label e o select */
 .container-filtro-categoria {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
-    /* Posição relativa para que a seta customizada seja posicionada dentro dele */
     position: relative; 
 }
 
@@ -114,47 +111,35 @@ body {
     color: #004A8D;
 }
 
-/* O select customizado */
 #filtro-categoria {
     font-family: "Caveat Brush", cursive;
-    padding: 10px 40px 10px 20px; /* Espaço à direita para a seta */
+    padding: 10px 40px 10px 20px;
     font-size: 1.2em;
     border-radius: 50px;
     border: 2px solid #004A8D;
     background-color: #fff;
     color: #004A8D;
     cursor: pointer;
-    
-    /* Remove a seta padrão do navegador */
     appearance: none;
     -webkit-appearance: none;
 }
 
-/* A seta customizada, criada com um pseudo-elemento */
 .container-filtro-categoria::after {
     content: '';
     position: absolute;
     top: 50%;
-    right: 20px; /* Posição da seta */
-    
-    /* Estado inicial: rotacionada */
+    right: 20px;
     transform: translateY(-50%) rotate(-90deg);
-    
     width: 0.7em;
     height: 0.7em;
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23004A8D%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
     background-size: contain;
-    
-    /* A transição que suaviza a animação */
     transition: transform 0.3s ease;
-
     pointer-events: none;
 }
 
-/* A animação em si, que ocorre ao passar o mouse */
 .container-filtro-categoria:hover::after {
-    /* Estado final: sem rotação */
     transform: translateY(-50%) rotate(0deg);
 }
 
@@ -170,18 +155,24 @@ main {
 .card-anuncio {
     background-color: #ffffff;
     border: 3px solid #2c3e50;
-    border-radius: 10px 10px 8px 8px;
+    border-radius: 10px;
     box-shadow: 5px 5px 0px #F7941D;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    cursor: pointer;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease;
     max-height: 480px;
     overflow: hidden;
 }
+
+/* --- NOVO ---: Adicionando cursor de ponteiro apenas no card, não nos botões internos */
+.card-anuncio .card-conteudo-clicavel {
+    cursor: pointer;
+    flex-grow: 1;
+}
+
 
 .card-anuncio.visivel {
     opacity: 1;
@@ -226,7 +217,6 @@ main {
 }
 
 .card-anuncio p {
-    flex-grow: 1;
     margin-bottom: 20px;
     font-size: 1.2em;
     display: -webkit-box;
@@ -236,6 +226,16 @@ main {
     overflow: hidden;
     overflow-wrap: break-word;
     word-break: break-all;
+}
+
+/* --- NOVO ---: Container para os botões de like e contato */
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto; /* Empurra o rodapé para o fundo do card */
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 }
 
 .card-anuncio .contato {
@@ -250,10 +250,98 @@ main {
     transition: all 0.2s ease;
     overflow-wrap: break-word;
     word-break: break-all;
+    cursor: pointer;
 }
 .card-anuncio:hover .contato {
     background-color: #fff3e0;
 }
+
+/* --- NOVO ---: Estilos do Sistema de Like */
+.like-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Necessário para a animação */
+}
+
+.like-btn .material-icons {
+    font-size: 38px;
+    color: #a0a0a0; /* Cor do coração vazio */
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.like-btn:hover .material-icons {
+    transform: scale(1.15);
+}
+
+.like-btn.liked .material-icons {
+    color: #e74c3c; /* Cor do coração "curtido" */
+    animation: pop 0.3s ease-out;
+}
+
+.like-count {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Animação de "pop" para o coração */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+/* A MÁGICA DA ANIMAÇÃO DE "EXPLOSÃO" */
+.like-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0);
+    /* Usamos box-shadow para criar múltiplas "partículas" a partir de um único elemento */
+    box-shadow: 
+        0 -20px 15px -10px #e74c3c, 
+        20px 0px 15px -10px #e74c3c,
+        0 20px 15px -10px #f1c40f, 
+        -20px 0px 15px -10px #f1c40f,
+        15px -15px 15px -10px #3498db, 
+        15px 15px 15px -10px #3498db,
+        -15px 15px 15px -10px #9b59b6, 
+        -15px -15px 15px -10px #9b59b6;
+    opacity: 0;
+}
+.like-btn.liked::after {
+    /* Ativa a animação quando a classe .liked é adicionada */
+    animation: burst 0.6s ease-out;
+}
+
+/* Animação das partículas */
+@keyframes burst {
+    0% {
+        transform: scale(0.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
 
 .mensagem-sem-anuncios {
     text-align: center;
@@ -386,6 +474,12 @@ main {
 #conteudo-detalhes-anuncio {
     overflow-y: auto;
     padding-right: 15px;
+}
+
+/* --- NOVO --- Adicionando like-container também ao modal de detalhes */
+#conteudo-detalhes-anuncio .like-container {
+    justify-content: flex-end; /* Alinha o like à direita no modal */
+    margin-bottom: 15px;
 }
 
 #conteudo-detalhes-anuncio h2 {
